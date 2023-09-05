@@ -1,6 +1,11 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.BufferedReader;
+import java.util.Scanner;
 
 
 class Animal{
@@ -126,9 +131,46 @@ class _Tiger extends _Predator implements Barkable{
     }
 }
 
+class IOtest{
+    InputStream in = System.in;
+    public void consoleIO() throws IOException{};
+}
 
+class _InputStream extends IOtest{
+    byte[] consoleInput = new byte[10];
+    public void consoleIO() throws IOException{
+        this.in.read(this.consoleInput);
+    }
+    public byte[] getConsoleInput(){
+        return this.consoleInput;
+    }
+}
+
+class _InputStreamReader extends IOtest{
+    char[] consoleInput = new char[10];
+    public void consoleIO() throws IOException{
+        InputStreamReader in = new InputStreamReader(this.in);
+        in.read(this.consoleInput);
+    }
+    public char[] getConsoleInput(){
+        return this.consoleInput;
+    }
+}
+
+class _BufferReader extends IOtest{
+    String consolInput;
+    public void consoleIO() throws IOException{
+        InputStreamReader reader = new InputStreamReader(this.in);
+        BufferedReader br = new BufferedReader(reader);
+        this.consolInput = br.readLine();
+    }
+    public String getConsoleInput(){
+        return this.consolInput;
+    }
+}
 
 public class Test {
+
     public static void main(String[] args) {
         System.out.println("Hello, World!");
         
@@ -208,8 +250,27 @@ public class Test {
         Bouncer bouncer = new Bouncer();
         bouncer.barkAnimal(lion);
 
+        
         //추상 클래스
         _Tiger _tiger = new _Tiger("_tiger");//_Predator 추상 클래스, Barkable 인터페이스
         System.out.println("Get Food : " + _tiger.getFood());
+        
+        //입출력
+        _InputStream inputStream = new _InputStream();//read byte
+        _InputStreamReader inputStreamReader = new _InputStreamReader();//read char
+        _BufferReader bufferReader = new _BufferReader();//read string
+        try{
+            // inputStream.consoleIO();
+            // System.out.println("Console In : " + Arrays.toString(inputStream.getConsoleInput()));
+            // inputStreamReader.consoleIO();
+            // System.out.println("Console In : " + inputStreamReader.getConsoleInput().toString());
+            // bufferReader.consoleIO();
+            // System.out.println("Console In : " + bufferReader.getConsoleInput());
+        }
+        catch(Exception e){
+        }
+        Scanner sc = new Scanner(System.in);
+        System.out.println(sc.next());//토큰 하나 읽어들임
     }
+    
 }
