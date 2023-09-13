@@ -1,12 +1,22 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 
+//콘솔 입출력
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.nio.Buffer;
 import java.io.BufferedReader;
+import java.io.File;
 import java.util.Scanner;
 
+// 파일 입출력
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.io.FileReader;
 
 class Animal{
     String name;
@@ -255,6 +265,7 @@ public class Test {
         _Tiger _tiger = new _Tiger("_tiger");//_Predator 추상 클래스, Barkable 인터페이스
         System.out.println("Get Food : " + _tiger.getFood());
         
+
         //입출력
         _InputStream inputStream = new _InputStream();//read byte
         _InputStreamReader inputStreamReader = new _InputStreamReader();//read char
@@ -269,8 +280,65 @@ public class Test {
         }
         catch(Exception e){
         }
-        Scanner sc = new Scanner(System.in);
-        System.out.println(sc.next());//토큰 하나 읽어들임
+        // Scanner sc = new Scanner(System.in);
+        // System.out.println(sc.next());//토큰 하나 읽어들임
+        
+
+        //파일 입출력
+        String fileName = "TestFile";
+        FileIO fileIO = new FileIO(fileName);
+        try{
+            fileIO.fileWriter();
+            //내용추가 가능
+            fileIO.fileWriter(true);//오버라이딩을 통한 프로토타입 생성
+            fileIO.fileReader();
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+
+        
     }
     
+}
+
+class FileIO{ String path = "./";
+    String fileName;
+    //바이트로 문자열 저장
+    public FileIO(String fileName){
+        this.fileName = fileName + ".txt";
+    }
+    public void fileOutputStream() throws IOException{
+        FileOutputStream output = new FileOutputStream(this.path + this.fileName);
+        for(int i = 0; i < 3; i++){
+            String data = i + "line\n";
+            output.write(data.getBytes());
+        }
+        output.close();
+    }
+    public void fileWriter() throws IOException{
+        fileWriter(false);
+    }
+    public void fileWriter(boolean addContents) throws IOException{
+        FileWriter fw = new FileWriter(this.path + this.fileName, addContents);
+        for(int i = 0; i < 10; i++){
+            fw.write(i + " lines\r\n"); // */r = 커서를 제일 앞으로
+        }
+        fw.close();
+    }
+    public void printWriter() throws IOException{
+        PrintWriter pw = new PrintWriter(this.path + this.fileName);
+        for(int i = 0; i < 10; i++){
+            pw.println(i + "lines");
+        }
+        pw.close();
+    }
+    public void fileReader() throws IOException{
+        BufferedReader br = new BufferedReader(new FileReader(this.fileName));
+        String line;
+        while ((line = br.readLine()) != null){
+            System.out.println(line);
+        }
+        br.close();
+    }
 }
