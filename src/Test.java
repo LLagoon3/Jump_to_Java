@@ -18,6 +18,10 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.io.FileReader;
 
+// 패키지
+import house.*;
+import house.person.Park;
+
 class Animal{
     String name;
     public Animal(String n){ //기본 생성자
@@ -297,7 +301,9 @@ public class Test {
             System.out.println(e);
         }
 
-        
+        //패키지
+        HouseKim kim = new HouseKim();
+        Park park = new Park();        
     }
     
 }
